@@ -1,0 +1,127 @@
+import csv
+def add_employee():
+    try:
+        n = int(input("Enter number of employees: "))
+
+        if n <= 0:
+            raise ValueError
+    except ValueError:
+        print("Invalid number of employees!")
+        return
+    try:
+        with open("payroll.csv", "a", newline="") as file:
+            writer = csv.writer(file)
+            if file.tell() == 0:
+                writer.writerow([
+                    "Employee ID", "Name",
+                    "Basic Salary", "Allowance",
+                    "Deduction", "Net Salary"
+                ])
+            for i in range(n):
+                print("\nEmployee", i + 1)
+                try:
+                    emp_id = int(input("Enter Employee ID: "))
+
+                    if emp_id <= 0:
+                        raise ValueError
+                except ValueError:
+                    print("Invalid Employee ID!")
+                    continue
+
+                try:
+                    name = input("Enter Employee Name: ")
+
+                    if not name.strip() or not name.replace(" ", "").isalpha():
+                        raise ValueError
+
+                except ValueError:
+                    print("Invalid Employee Name!")
+                    continue
+                try:
+                    basic = float(input("Enter Basic Salary: "))
+                    allowance = float(input("Enter Allowance: "))
+                    deduction = float(input("Enter Deduction: "))
+
+                    if basic < 0 or allowance < 0 or deduction < 0:
+                        raise ValueError
+
+                    if deduction > basic + allowance:
+                        raise ValueError
+                except ValueError:
+                    print("Invalid salary details!")
+                    continue
+                net_salary = basic + allowance - deduction
+
+                writer.writerow([
+                    emp_id, name, basic,
+                    allowance, deduction, net_salary
+                ])
+                print("Employee added successfully!")
+                print("Net Salary:", net_salary)
+    except OSError:
+        print("Error while writing payroll file!")
+
+
+def display_employees():
+
+    try:
+        with open("payroll.csv", "r", newline="") as file:
+
+            reader = csv.reader(file)
+
+            header = next(reader, None)
+
+            if header is None:
+                print("No employee records found!")
+                return
+
+            print("\n------ EMPLOYEE PAYROLL RECORDS ------")
+
+            for row in reader:
+
+                try:
+                    emp_id, name, basic, allowance, deduction, net = row
+
+                    print("\nEmployee ID:", emp_id)
+                    print("Name:", name)
+                    print("Basic Salary:", basic)
+                    print("Allowance:", allowance)
+                    print("Deduction:", deduction)
+                    print("Net Salary:", net)
+
+                except ValueError:
+                    print("Invalid employee record found!")
+
+    except FileNotFoundError:
+        print("Payroll file does not exist!")
+
+    except OSError:
+        print("Error while reading payroll file!")
+
+
+while True:
+
+    print("\n===== PAYROLL MANAGEMENT SYSTEM =====")
+    print("1. Add Employee")
+    print("2. Display Payroll Records")
+    print("3. Exit")
+
+    try:
+        choice = int(input("Enter your choice: "))
+
+    except ValueError:
+        print("Please enter a valid number!")
+        continue
+
+    if choice == 1:
+        add_employee()
+
+    elif choice == 2:
+        display_employees()
+
+    elif choice == 3:
+        print("Exiting Payroll Management System...")
+        break
+
+    else:
+        print("Invalid choice!")

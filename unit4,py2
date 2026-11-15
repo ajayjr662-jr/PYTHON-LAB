@@ -1,0 +1,205 @@
+def add_student():
+
+    # Getting Roll Number
+    try:
+        roll = int(input("Enter Roll Number: "))
+        if roll <= 0:
+            raise ValueError("Roll Number must be positive")
+
+    except ValueError:
+        print("Invalid Roll Number! Enter a valid number.")
+        return
+
+    # Getting Student Name
+    try:
+        name = input("Enter Student Name: ")
+
+        if not name.strip() or not name.replace(" ", "").isalpha():
+            raise ValueError("Invalid Name")
+
+    except ValueError:
+        print("Invalid Student Name! Enter alphabets only.")
+        return
+
+    # Getting Marks
+    try:
+        marks = float(input("Enter Marks: "))
+
+        if marks < 0 or marks > 100:
+            raise ValueError("Marks must be between 0 and 100")
+
+    except ValueError:
+        print("Invalid Marks! Enter marks between 0 and 100.")
+        return
+
+    # Saving student details
+    try:
+        with open("students.txt", "a") as file:
+            file.write(str(roll) + "," + name + "," + str(marks) + "\n")
+
+        print("Student added successfully!")
+
+    except OSError:
+        print("Error while saving student details.")
+
+
+def display_students():
+
+    try:
+        with open("students.txt", "r") as file:
+            records = file.readlines()
+
+            if not records:
+                print("No student records found.")
+
+            else:
+                print("\n--- Student Records ---")
+
+                for record in records:
+                    try:
+                        roll, name, marks = record.strip().split(",")
+
+                        print("Roll Number:", roll)
+                        print("Name:", name)
+                        print("Marks:", marks)
+                        print("-------------------")
+
+                    except ValueError:
+                        print("Invalid student record found!")
+
+    except FileNotFoundError:
+        print("Student file does not exist!")
+
+    except OSError:
+        print("Error while reading the file!")
+
+
+while True:
+
+    print("\n--- Student Data Manager ---")
+    print("1. Add Student")
+    print("2. Display Students")
+    print("3. Exit")
+
+    try:
+        choice = int(input("Enter your choice: "))
+
+    except ValueError:
+        print("Invalid choice! Enter a number.")
+        continue
+
+    if choice == 1:
+        add_student()
+
+    elif choice == 2:
+        display_students()
+
+    elif choice == 3:
+        print("Exiting program...")
+        break
+
+    else:
+        print("Invalid choice! Select 1, 2 or 3.")
+
+def add_student():
+
+    # Getting Roll Number
+    try:
+        roll = int(input("Enter Roll Number: "))
+        if roll <= 0:
+            raise ValueError("Roll Number must be positive")
+
+    except ValueError:
+        print("Invalid Roll Number! Enter a valid number.")
+        return
+
+    # Getting Student Name
+    try:
+        name = input("Enter Student Name: ")
+
+        if not name.strip() or not name.replace(" ", "").isalpha():
+            raise ValueError("Invalid Name")
+
+    except ValueError:
+        print("Invalid Student Name! Enter alphabets only.")
+        return
+
+    # Getting Marks
+    try:
+        marks = float(input("Enter Marks: "))
+
+        if marks < 0 or marks > 100:
+            raise ValueError("Marks must be between 0 and 100")
+
+    except ValueError:
+        print("Invalid Marks! Enter marks between 0 and 100.")
+        return
+
+    # Saving student details
+    try:
+        with open("students.txt", "a") as file:
+            file.write(str(roll) + "," + name + "," + str(marks) + "\n")
+
+        print("Student added successfully!")
+
+    except OSError:
+        print("Error while saving student details.")
+
+
+def display_students():
+
+    try:
+        with open("students.txt", "r") as file:
+            records = file.readlines()
+
+            if not records:
+                print("No student records found.")
+
+            else:
+                print("\n--- Student Records ---")
+
+                for record in records:
+                    try:
+                        roll, name, marks = record.strip().split(",")
+
+                        print("Roll Number:", roll)
+                        print("Name:", name)
+                        print("Marks:", marks)
+                        print("-------------------")
+
+                    except ValueError:
+                        print("Invalid student record found!")
+
+    except FileNotFoundError:
+        print("Student file does not exist!")
+
+    except OSError:
+        print("Error while reading the file!")
+
+
+while True:
+
+    print("\n--- Student Data Manager ---")
+    print("1. Add Student")
+    print("2. Display Students")
+    print("3. Exit")
+
+    try:
+        choice = int(input("Enter your choice: "))
+
+    except ValueError:
+        print("Invalid choice! Enter a number.")
+        continue
+
+    if choice == 1:
+        add_student()
+
+    elif choice == 2:
+        display_students()
+
+    elif choice == 3:
+        print("Exiting program...")
+        break
+
+    else:
+        print("Invalid choice! Select 1, 2 or 3.")
